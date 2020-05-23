@@ -15,14 +15,14 @@ T.get('account/verify_credentials', {
     include_email: false
 }, onAuthenticated)
 
-async function onAuthenticated(err){
+ function onAuthenticated(err){
     if (err) {
         console.log(err)
     } else {
     console.log('Authentication successful.')
 
-    var stream = await T.stream('statuses/filter', { track: ['@PiyushSthr'] });
-    stream.on('tweet', (eventmsg)=> {
+    var stream =  T.stream('statuses/filter', { track: ['@PiyushSthr'] });
+    stream.on('tweet', async (eventmsg)=> {
         //getting name and username of the user
         var name = eventmsg.source.name;
         var screenName = eventmsg.source.screen_name;
