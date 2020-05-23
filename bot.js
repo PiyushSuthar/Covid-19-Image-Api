@@ -15,7 +15,7 @@ T.get('account/verify_credentials', {
     include_email: false
 }, onAuthenticated)
 
-function onAuthenticated(err){
+async function onAuthenticated(err){
     if (err) {
         console.log(err)
     } else {
