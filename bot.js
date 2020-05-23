@@ -33,7 +33,8 @@ function onAuthenticated(err){
         nodeHtmlToImage({
             output: './image.png',
             html: '<!DOCTYPE html> <html lang=""><body> <style> body { margin: 0; background: white; color: #323232; font-family: Helvetica neue, roboto; }.outer{ height: 335px; width: 600px; background:linear-gradient(0deg, rgba(0, 0, 0, 0.575), rgba(65, 65, 65, 0.37)), url("https://source.unsplash.com/600x335/?happy.google,coding"); background-color: rgb(23, 23, 36); display: flex; flex-direction: column; align-items: center; justify-content: center; columns: white; } .profile img{ width: 100px; border-radius: 50%; border: 6px solid white ; } .profile{ color: white; } .thanks{ font-family: cursive; color: white; font-size: 30px; } </style> <div class="outer"> <div class="thanks"> <h4>{{text}}</h4> </div> <div class="profile"> <img src="{{profileUrl}}" alt=""><h3>@{{name}}</h3> </div> </div> </body> </html>',
-            content: { text:"Thanks for Mention!", name: screenName , profileUrl: imageUrl}
+            content: { text:"Thanks for Mention!", name: screenName , profileUrl: imageUrl},
+            puppeteerArgs: ['--no-sandbox']
           })
             .then(() => {console.log('The image was created successfully!'),tweet(screenName,nameID)})
           
