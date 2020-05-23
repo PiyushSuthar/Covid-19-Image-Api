@@ -25,9 +25,9 @@ T.get('account/verify_credentials', {
     var stream =  T.stream('statuses/filter', { track: ['@PiyushSthr'] });
     stream.on('tweet', (eventmsg)=> {
         //getting name and username of the user
-        var name = eventmsg.source.name;
-        var screenName = eventmsg.source.screen_name;
-        var imageUrl = eventmsg.source.profile_image_url;
+        var name = eventmsg.name;
+        var screenName = eventmsg.screen_name;
+        var imageUrl = eventmsg.profile_image_url;
         var nameID  = eventmsg.id_str;
         var text = "Thanks for Mention!"
         //since twitter blocks tweets of same type so we'll associate a
