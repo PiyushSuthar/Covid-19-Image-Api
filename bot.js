@@ -17,13 +17,13 @@ stream.on('follow', (eventmsg)=> {
 	//getting name and username of the user
     var name = eventmsg.source.name;
     var screenName = eventmsg.source.screen_name;
-    var imageUrl = eventmsg.source.profile_image_url;
+    //var imageUrl = eventmsg.source.profile_image_url;
     //since twitter blocks tweets of same type so we'll associate a
     //unique number using Math.random() or anything you like
     nodeHtmlToImage({
         output: './image.png',
         html: '<!DOCTYPE html> <html lang=""><body> <style> body { margin: 0; background: white; color: #323232; font-family: Helvetica neue, roboto; }.outer{ height: 335px; width: 600px; background:linear-gradient(0deg, rgba(0, 0, 0, 0.575), rgba(65, 65, 65, 0.37)), url("https://source.unsplash.com/600x335/?happy.google,coding"); background-color: rgb(23, 23, 36); display: flex; flex-direction: column; align-items: center; justify-content: center; columns: white; } .profile img{ width: 100px; border-radius: 50%; border: 6px solid white ; } .profile{ color: white; } .thanks{ font-family: cursive; color: white; font-size: 30px; } </style> <div class="outer"> <div class="thanks"> <h4>Thanks For Following</h4> </div> <div class="profile"> <img src="{{profileUrl}}" alt=""><h3>@{{name}}</h3> </div> </div> </body> </html>',
-        content: { name: screenName , profileUrl: imageUrl}
+        content: { name: screenName , profileUrl: "https://pbs.twimg.com/profile_images/1241769826726621190/sgoRAS9A_400x400.jpg"}
       })
         .then(() => {console.log('The image was created successfully!'),tweet(screenName)})
       
