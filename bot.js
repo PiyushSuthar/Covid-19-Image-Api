@@ -57,6 +57,10 @@ T.get('account/verify_credentials', {
                 ],
               })
             const page = await browser.newPage()
+            await page.setViewport({
+                width: 600,
+                height: 350
+            });
             await page.setContent(htmlString)
             await page.screenshot({path: 'image.png'})
             await browser.close()
@@ -83,7 +87,7 @@ function tweet(username,nameID){
                 // now we can reference the media and post a tweet (media will attach to the tweet)
 
                 var Status= `Thanks @${username} for following!`;//Your Status
-                var params = { status: Status, media_ids: [mediaIdStr],in_reply_to_status_id: nameID }
+                var params = { status: Status, media_ids: [mediaIdStr], in_reply_to_status_id: nameID }
 
                 //Now It will post the tweet with the image.
                 T.post('statuses/update', params, function (err, data, response) {
