@@ -1,4 +1,4 @@
-const nodeHtmlToImage = require('node-html-to-image')
+const puppeteer = require('puppeteer')
 var twit = require('twit')
 var fs = require('fs')
 
@@ -28,15 +28,32 @@ T.get('account/verify_credentials', {
         var screenName = eventmsg.source.screen_name;
         var imageUrl = eventmsg.source.profile_image_url;
         var nameID  = tweet.id_str;
+        var text = "Thanks for Mention!"
         //since twitter blocks tweets of same type so we'll associate a
         //unique number using Math.random() or anything you like
-        await nodeHtmlToImage({
-            output: './image.png',
-            html: '<!DOCTYPE html> <html lang=""><body> <style> body { margin: 0; background: white; color: #323232; font-family: Helvetica neue, roboto; }.outer{ height: 335px; width: 600px; background:linear-gradient(0deg, rgba(0, 0, 0, 0.575), rgba(65, 65, 65, 0.37)), url("https://source.unsplash.com/600x335/?happy.google,coding"); background-color: rgb(23, 23, 36); display: flex; flex-direction: column; align-items: center; justify-content: center; columns: white; } .profile img{ width: 100px; border-radius: 50%; border: 6px solid white ; } .profile{ color: white; } .thanks{ font-family: cursive; color: white; font-size: 30px; } </style> <div class="outer"> <div class="thanks"> <h4>{{text}}</h4> </div> <div class="profile"> <img src="{{profileUrl}}" alt=""><h3>@{{name}}</h3> </div> </div> </body> </html>',
-            content: { text:"Thanks for Mention!", name: screenName , profileUrl: imageUrl},
-            puppeteerArgs: ['--no-sandbox']
-          })
-            .then(() => {console.log('The image was created successfully!'),tweet(screenName,nameID)})
+        const htmlString = `<!DOCTYPE html> 
+        <html lang="">
+           <body>
+              <style> body { margin: 0; background: white; color: #323232; font-family: Helvetica neue, roboto; }.outer{ height: 335px; width: 600px; background:linear-gradient(0deg, rgba(0, 0, 0, 0.575), rgba(65, 65, 65, 0.37)), url("https://source.unsplash.com/600x335/?happy.google,coding"); background-color: rgb(23, 23, 36); display: flex; flex-direction: column; align-items: center; justify-content: center; columns: white; } .profile img{ width: 100px; border-radius: 50%; border: 6px solid white ; } .profile{ color: white; } .thanks{ font-family: cursive; color: white; font-size: 30px; } </style>
+              <div class="outer">
+                 <div class="thanks">
+                    <h4>${text}</h4>
+                 </div>
+                 <div class="profile">
+                    <img src="${imageUrl}" alt="">
+                    <h3>@${screenName}</h3>
+                 </div>
+              </div>
+           </body>
+        </html>`;
+
+        (async () => {
+            const browser = await puppeteer.launch()
+            const page = await browser.newPage()
+            await page.setContent(htmlString)
+            await page.screenshot({path: 'image.png'})
+            await browser.close()
+          })().then(tweet(screenName,nameID))
           
     });
 }}
