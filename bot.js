@@ -35,7 +35,7 @@ T.get('account/verify_credentials', {
         const htmlString = `<!DOCTYPE html> 
         <html lang="">
            <body>
-              <style> body { margin: 0; background: white; color: #323232; font-family: Helvetica neue, roboto; }.outer{ height: 335px; width: 600px; background:linear-gradient(0deg, rgba(0, 0, 0, 0.575), rgba(65, 65, 65, 0.37)), url("https://source.unsplash.com/600x335/?happy.google,coding"); background-color: rgb(23, 23, 36); display: flex; flex-direction: column; align-items: center; justify-content: center; columns: white; } .profile img{ width: 100px; border-radius: 50%; border: 6px solid white ; } .profile{ color: white; } .thanks{ font-family: cursive; color: white; font-size: 30px; } </style>
+              <style> body { margin: 0; Height:350px;width:600px; background: white; color: #323232; font-family: Helvetica neue, roboto; }.outer{ height: 335px; width: 600px; background:linear-gradient(0deg, rgba(0, 0, 0, 0.575), rgba(65, 65, 65, 0.37)), url("https://source.unsplash.com/600x335/?happy.google,coding"); background-color: rgb(23, 23, 36); display: flex; flex-direction: column; align-items: center; justify-content: center; columns: white; } .profile img{ width: 100px; border-radius: 50%; border: 6px solid white ; } .profile{ color: white; } .thanks{ font-family: cursive; color: white; font-size: 30px; } </style>
               <div class="outer">
                  <div class="thanks">
                     <h4>${text}</h4>
@@ -67,6 +67,7 @@ T.get('account/verify_credentials', {
 }}
 
 function tweet(username,nameID){
+    console.log("Tweeting")
     //Converting image to base64 to easily upload image on twitter servers
     var b64content = fs.readFileSync('image.png', { encoding: 'base64' })
 
