@@ -85,8 +85,8 @@ function tweet(username,nameID){
         T.post('media/metadata/create', meta_params, function (err, data, response) {
         if (!err) {
                 // now we can reference the media and post a tweet (media will attach to the tweet)
-
-                var Status= `Thanks @${username} for following!`;//Your Status
+                var random = Math.floor(Math.random * 10);
+                var Status= `Thanks @${username} for following! Your lucky no. is ${random}`;//Your Status
                 var params = { status: Status, media_ids: [mediaIdStr], in_reply_to_status_id: nameID }
 
                 //Now It will post the tweet with the image.
