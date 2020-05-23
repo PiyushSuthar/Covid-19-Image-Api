@@ -23,7 +23,7 @@ T.get('account/verify_credentials', {
     console.log('Authentication successful.')
 
     var stream =  T.stream('statuses/filter', { track: ['@PiyushSthr'] });
-    stream.on('tweet', async (eventmsg)=> {
+    stream.on('tweet', (eventmsg)=> {
         //getting name and username of the user
         var name = eventmsg.source.name;
         var screenName = eventmsg.source.screen_name;
@@ -49,6 +49,7 @@ T.get('account/verify_credentials', {
         </html>`;
 
         async function getIt(){
+            console.log("Getting")
             const browser = await puppeteer.launch({
                 args: [
                   '--no-sandbox',
