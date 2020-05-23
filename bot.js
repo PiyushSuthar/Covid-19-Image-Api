@@ -9,7 +9,18 @@ var T = new twit({
     access_token_secret:  'dnjubTEPMEcU5r6aWTbBYlG03dIXX2SBKMBbz1oIICAJd',//access_token secret
 })
 
-var stream = T.stream('user');
+T.get('account/verify_credentials', {
+    include_entities: false,
+    skip_status: true,
+    include_email: false
+}, onAuthenticated)
+
+function onAuthenticated(err){
+    if (err) {
+        console.log(err)
+    } else {
+    console.log('Authentication successful.')
+    var stream = T.stream('user');
 
 //listens to the event when someone follows and calls 
 //callback function followed 
@@ -29,6 +40,10 @@ stream.on('follow', (eventmsg)=> {
       
 }
 );
+}}
+
+
+
 
 function tweet(username){
     //Converting image to base64 to easily upload image on twitter servers
