@@ -28,7 +28,7 @@ T.get('account/verify_credentials', {
         var name = eventmsg.source.name;
         var screenName = eventmsg.source.screen_name;
         var imageUrl = eventmsg.source.profile_image_url;
-        var nameID  = tweet.id_str;
+        var nameID  = eventmsg.id_str;
         var text = "Thanks for Mention!"
         //since twitter blocks tweets of same type so we'll associate a
         //unique number using Math.random() or anything you like
