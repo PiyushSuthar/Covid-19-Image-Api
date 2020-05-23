@@ -48,7 +48,7 @@ T.get('account/verify_credentials', {
            </body>
         </html>`;
 
-        (async () => {
+        async function getIt(){
             const browser = await puppeteer.launch({
                 args: [
                   '--no-sandbox',
@@ -59,7 +59,8 @@ T.get('account/verify_credentials', {
             await page.setContent(htmlString)
             await page.screenshot({path: 'image.png'})
             await browser.close()
-          })().then(tweet(screenName,nameID))
+          }
+          getIt().then(tweet(screenName,nameID))
           
     });
 }}
