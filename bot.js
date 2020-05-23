@@ -13,9 +13,7 @@ var stream = T.stream('user');
 
 //listens to the event when someone follows and calls 
 //callback function followed 
-stream.on('follow', followed);
-
-function followed(eventmsg) {
+stream.on('follow', (eventmsg)=> {
 	//getting name and username of the user
     var name = eventmsg.source.name;
     var screenName = eventmsg.source.screen_name;
@@ -30,6 +28,7 @@ function followed(eventmsg) {
         .then(() => {console.log('The image was created successfully!'),tweet(screenName)})
       
 }
+);
 
 function tweet(username){
     //Converting image to base64 to easily upload image on twitter servers
