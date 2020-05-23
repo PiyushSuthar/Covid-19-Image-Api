@@ -1,0 +1,16 @@
+{
+  "name": "twitter-thank-you-bot",
+  "version": "1.0.0",
+  "description": "A bot that thanks everyone who follows.",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node bot.js"
+  },
+  "author": "Piyush Suthar",
+  "license": "ISC",
+  "dependencies": {
+    "twit": "^2.2.11",
+    "node-html-to-image": "^2.1.1"
+  }
+}
