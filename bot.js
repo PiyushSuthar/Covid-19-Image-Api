@@ -39,7 +39,7 @@ app.get("/country/:id", (req,res)=>{
    var country = req.params.id;
    fetch(`https://disease.sh/v2/countries/${country}`)
    .then(res => res.json())
-   .then(json => getIt(json, "false", json.country, `${country}.png`).then(res.sendFile(`${country}.png`, options, (err)=>{
+   .then(json => getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
       console.log(err)
    })))
    
@@ -123,18 +123,13 @@ async function getIt(data, live, country, filename) {
    `;
    
    console.log("Getting")
-    const browser = await puppeteer.launch({
-        args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-        ],
-    })
+    const browser = await puppeteer.launch()
     const page = await browser.newPage()
     await page.setViewport({
         width: 600,
         height: 350
     });
     await page.setContent(worldTemplate)
-    await page.screenshot({ path: filename })
+    await page.screenshot({ path: `${filename}.png` })
     await browser.close()
 }
