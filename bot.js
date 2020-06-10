@@ -135,6 +135,7 @@ async function getIt(data, live, country, filename) {
         height: 350
     });
     await page.setContent(worldTemplate)
+    await fs.closeSync(fs.openSync(filename,"w"))
     await page.screenshot({ path: filename })
     await browser.close()
 }
