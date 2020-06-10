@@ -29,7 +29,7 @@ app.get("/", (req,res)=>{
 
 app.get("/country/:id", (req,res)=>{
    const options = {
-      root: __dirname+"country",
+      root: __dirname+"/country",
       headers: {
         'x-timestamp': Date.now(),
         'x-sent': true
@@ -50,7 +50,11 @@ app.listen(port)
 
 
 async function getIt(data, live, country, filename) {
-   fs.closeSync(fs.openSync(filename,"w"));
+   if (filename == "image.png") {
+      return
+   }else{
+      fs.closeSync(fs.openSync(filename,"w"));
+   }
    const worldTemplate = `<!DOCTYPE html>
    <html lang="en">
      <body>
