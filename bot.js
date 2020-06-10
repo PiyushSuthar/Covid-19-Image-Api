@@ -39,7 +39,7 @@ app.get("/country/:id", (req,res)=>{
    var country = req.params.id;
    fetch(`https://disease.sh/v2/countries/${country}`)
    .then(res => res.json())
-   .then(json => {fs.closeSync(fs.openSync(filename,"w"));getIt(json, "false", json.country, `country/${country}.png`).then(res.sendFile(`${country}.png`, options, (err)=>{
+   .then(json => {fs.closeSync(fs.openSync(`country/${country}.png`,"w"));getIt(json, "false", json.country, `country/${country}.png`).then(res.sendFile(`${country}.png`, options, (err)=>{
       console.log(err)
    }))})
    
