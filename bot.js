@@ -14,14 +14,14 @@ function numberWithCommas(x) {
 app.get("/", (req,res)=>{
    fetch('https://disease.sh/v2/all')
     .then(res => res.json())
-    .then(json => getIt(json, "false", "").then(res.sendFile("./image.png")));
+    .then(json => getIt(json, "false", "").then(res.sendFile("image.png")));
 })
 
 app.get("/country/:id", (req,res)=>{
    var country = req.params.id;
    fetch(`https://disease.sh/v2/countries/${country}`)
    .then(res => res.json())
-   .then(json => getIt(json, "false", json.country).then(res.sendFile("./image.png")))
+   .then(json => getIt(json, "false", json.country).then(res.sendFile('image.png')))
    
 })
 
