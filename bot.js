@@ -39,9 +39,9 @@ app.get("/country/:id", (req,res)=>{
    var country = req.params.id;
    fetch(`https://disease.sh/v2/countries/${country}`)
    .then(res => res.json())
-   .then(json => getIt(json, "false", json.country, `./country/${country}.png`).then(res.sendFile(`${country}.png`, options, (err)=>{
+   .then(json => {fs.closeSync(fs.openSync(country,"w"));getIt(json, "false", json.country, `country/${country}.png`).then(res.sendFile(`${country}.png`, options, (err)=>{
       console.log(err)
-   })))
+   }))})
    
 })
 
@@ -135,7 +135,6 @@ async function getIt(data, live, country, filename) {
         height: 350
     });
     await page.setContent(worldTemplate)
-    await fs.closeSync(fs.openSync(filename,"w"))
     await page.screenshot({ path: filename })
     await browser.close()
 }
