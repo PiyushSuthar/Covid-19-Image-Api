@@ -3,7 +3,7 @@ var fs = require('fs')
 const fetch = require('node-fetch')
 const express = require('express')
 const app = express()
-
+const port = process.env.PORT || 8000;
 
 // Function for capitalizing the first word of the string
 function numberWithCommas(x) {
@@ -25,6 +25,7 @@ app.get("/country/:id", (req,res)=>{
    
 })
 
+app.listen(port)
 
 
 
