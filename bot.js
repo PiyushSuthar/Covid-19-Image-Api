@@ -12,16 +12,36 @@ function numberWithCommas(x) {
 
 
 app.get("/", (req,res)=>{
+   const options = {
+      root: __dirname,
+      headers: {
+        'x-timestamp': Date.now(),
+        'x-sent': true
+      }
+    }
+   
    fetch('https://disease.sh/v2/all')
     .then(res => res.json())
-    .then(json => getIt(json, "false", "").then(res.sendFile("image.png")));
+    .then(json => getIt(json, "false", "").then(res.sendFile('image.png', options, (err)=>{
+      console.log(err)
+   })));
 })
 
 app.get("/country/:id", (req,res)=>{
+   const options = {
+      root: __dirname,
+      headers: {
+        'x-timestamp': Date.now(),
+        'x-sent': true
+      }
+    }
+  
    var country = req.params.id;
    fetch(`https://disease.sh/v2/countries/${country}`)
    .then(res => res.json())
-   .then(json => getIt(json, "false", json.country).then(res.sendFile('image.png')))
+   .then(json => getIt(json, "false", json.country).then(res.sendFile('image.png', options, (err)=>{
+      console.log(err)
+   })))
    
 })
 
