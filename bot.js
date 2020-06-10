@@ -22,14 +22,14 @@ app.get("/", (req,res)=>{
    
    fetch('https://disease.sh/v2/all')
     .then(res => res.json())
-    .then(json => getIt(json, "false", "").then(res.sendFile('image.png', options, (err)=>{
+    .then(json => getIt(json, "false", "", "image.png").then(res.sendFile('image.png', options, (err)=>{
       console.log(err)
    })));
 })
 
 app.get("/country/:id", (req,res)=>{
    const options = {
-      root: __dirname,
+      root: __dirname+"country",
       headers: {
         'x-timestamp': Date.now(),
         'x-sent': true
@@ -39,7 +39,7 @@ app.get("/country/:id", (req,res)=>{
    var country = req.params.id;
    fetch(`https://disease.sh/v2/countries/${country}`)
    .then(res => res.json())
-   .then(json => getIt(json, "false", json.country).then(res.sendFile('image.png', options, (err)=>{
+   .then(json => getIt(json, "false", json.country, `./country/${country}.png`).then(res.sendFile(`${country}.png`, options, (err)=>{
       console.log(err)
    })))
    
@@ -49,7 +49,7 @@ app.listen(port)
 
 
 
-async function getIt(data, live, country) {
+async function getIt(data, live, country, filename) {
    const worldTemplate = `<!DOCTYPE html>
    <html lang="en">
      <body>
@@ -135,6 +135,6 @@ async function getIt(data, live, country) {
         height: 350
     });
     await page.setContent(worldTemplate)
-    await page.screenshot({ path: 'image.png' })
+    await page.screenshot({ path: filename })
     await browser.close()
 }
