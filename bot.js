@@ -11,7 +11,6 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-app.use(express.static("public"))
 
 app.get("/", (req, res) => {
   fetch('https://disease.sh/v2/all')
@@ -28,8 +27,8 @@ app.get("/country/:id", (req, res) => {
     .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "false", data.country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") })})
 })
 
-app.get("/country/:id/latest", getCountryLatest(req,res))
-app.get("/latest/:id", getCountryLatest(req,res))
+app.get("/country/:id/latest",(req,res)=> getCountryLatest(req,res))
+app.get("/latest/:id", (req,res)=> getCountryLatest(req,res))
 
 var getCountryLatest = (req, res) => {
   var country = req.params.id;
@@ -43,11 +42,10 @@ app.get("/latest", (req, res) => {
   fetch('https://disease.sh/v2/all')
     .catch(err => console.log(err))
     .then(res => res.json())
-    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", "",).catch(err =>res.sendStatus(404),console.log(err)).then(data => { res.send(data), console.log("Done") }) })
+    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", "").catch(err =>res.sendStatus(404),console.log(err)).then(data => { res.send(data), console.log("Done") }) })
 })
 
 app.listen(port)
-
 
 
 async function getIt(data, live, country) {
