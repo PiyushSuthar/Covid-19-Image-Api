@@ -28,8 +28,8 @@ app.get("/country/:id", (req, res) => {
     .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "false", data.country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") })})
 })
 
-app.get("/country/:id/latest", getCountryLatest)
-app.get("/latest/:id", getCountryLatest)
+app.get("/country/:id/latest", getCountryLatest(req,res))
+app.get("/latest/:id", getCountryLatest(req,res))
 
 var getCountryLatest = (req, res) => {
   var country = req.params.id;
