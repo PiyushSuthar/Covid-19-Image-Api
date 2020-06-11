@@ -42,7 +42,7 @@ app.get("/latest", (req, res) => {
   fetch('https://disease.sh/v2/all')
     .catch(err => console.log(err))
     .then(res => res.json())
-    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", "").catch(err =>res.sendStatus(404),console.log(err)).then(data => { res.send(data), console.log("Done") }) })
+    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", "").catch(err =>{res.sendStatus(404),console.log(err)}).then(data => { res.send(data), console.log("Done") }) })
 })
 
 app.listen(port)
