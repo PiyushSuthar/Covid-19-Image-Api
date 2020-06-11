@@ -18,9 +18,6 @@ app.get("/", (req, res) => {
     .then(res => res.json())
     .catch(err => console.log(err))
     .then(json => { res.setHeader("Content-Type", "image/png"); getIt(json, "false", "").catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
-  //   .then(json => getIt(json, "false", "", "image.png").then(res.sendFile('image.png', options, (err)=>{
-  //     console.log(err)
-  //  })));
 })
 
 app.get("/country/:id", (req, res) => {
@@ -28,30 +25,25 @@ app.get("/country/:id", (req, res) => {
   fetch(`https://disease.sh/v2/countries/${country}`)
     .catch(err => console.log(err))
     .then(res => res.json())
-    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "false", data.country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
-  //  .then(json =>  getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
-  //     console.log(err)
-  //  })))
-
+    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "false", data.country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") })})
 })
 
-app.get("/latest/:id", (req, res) => {
+app.get("/country/:id/latest", getCountryLatest)
+app.get("/latest/:id", getCountryLatest)
+
+var getCountryLatest = (req, res) => {
   var country = req.params.id;
   fetch(`https://disease.sh/v2/countries/${country}`)
     .catch(err => console.log(err))
     .then(res => res.json())
     .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", data.country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
-  //  .then(json =>  getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
-  //     console.log(err)
-  //  })))
-
-})
+}
 
 app.get("/latest", (req, res) => {
   fetch('https://disease.sh/v2/all')
     .catch(err => console.log(err))
     .then(res => res.json())
-    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", "",).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
+    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", "",).catch(err =>res.sendStatus(404),console.log(err)).then(data => { res.send(data), console.log("Done") }) })
 })
 
 app.listen(port)
