@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer')
 var fs = require('fs')
 const fetch = require('node-fetch')
 const express = require('express')
+const { json } = require('express')
 const app = express()
 const port = process.env.PORT || 8000;
 
@@ -22,9 +23,10 @@ app.get("/", (req,res)=>{
    
    fetch('https://disease.sh/v2/all')
     .then(res => res.json())
-    .then(json => getIt(json, "false", "", "image.png").then(res.sendFile('image.png', options, (err)=>{
-      console.log(err)
-   })));
+    .then(json => res.setHeader("Content-Type", "image/png"),res.end(getIt(json, "false", "", "image.png")))
+  //   .then(json => getIt(json, "false", "", "image.png").then(res.sendFile('image.png', options, (err)=>{
+  //     console.log(err)
+  //  })));
 })
 
 app.get("/country/:id", (req,res)=>{
@@ -39,10 +41,11 @@ app.get("/country/:id", (req,res)=>{
    var country = req.params.id;
    fetch(`https://disease.sh/v2/countries/${country}`)
    .then(res => res.json())
-   .then(json => getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
-      console.log(err)
-   })))
-   
+   .then(json => res.setHeader("Content-Type", "image/png"),res.end(getIt(json, "false", json.country, country)))
+  //  .then(json =>  getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
+  //     console.log(err)
+  //  })))
+  
 })
 
 app.listen(port)
@@ -130,6 +133,7 @@ async function getIt(data, live, country, filename) {
         height: 350
     });
     await page.setContent(worldTemplate)
-    await page.screenshot({ path: `${filename}.png` })
+    var _page = await page.screenshot({type: "png"})
     await browser.close()
+    return _page
 }
