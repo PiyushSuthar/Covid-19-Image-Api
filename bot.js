@@ -8,46 +8,46 @@ const port = process.env.PORT || 8000;
 
 // Function for capitalizing the first word of the string
 function numberWithCommas(x) {
-   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
- }
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 
-app.get("/", (req,res)=>{
-   const options = {
-      root: __dirname,
-      headers: {
-        'x-timestamp': Date.now(),
-        'x-sent': true
-      }
+app.get("/", (req, res) => {
+  const options = {
+    root: __dirname,
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
     }
-   
-   fetch('https://disease.sh/v2/all')
+  }
+
+  fetch('https://disease.sh/v2/all')
     .then(res => res.json())
-    .catch(err => console.log(err) )
-    .then(json => {res.setHeader("Content-Type", "image/png");getIt(json, "false", "", "image.png").catch(err=> console.log(err)).then(data => {res.send(data),console.log("Done")})})
+    .catch(err => console.log(err))
+    .then(json => { res.setHeader("Content-Type", "image/png"); getIt(json, "false", "", "image.png").catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
   //   .then(json => getIt(json, "false", "", "image.png").then(res.sendFile('image.png', options, (err)=>{
   //     console.log(err)
   //  })));
 })
 
-app.get("/country/:id", (req,res)=>{
-   const options = {
-      root: __dirname,
-      headers: {
-        'x-timestamp': Date.now(),
-        'x-sent': true
-      }
+app.get("/country/:id", (req, res) => {
+  const options = {
+    root: __dirname,
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
     }
-  
-   var country = req.params.id;
-   fetch(`https://disease.sh/v2/countries/${country}`)
-   .catch(err => console.log(err))
-   .then(res => res.json())
-   .then(data => {res.setHeader("Content-Type", "image/png");getIt(data, "false", json.country, country).catch(err => console.log(err)).then(data =>{res.send(data),console.log("Done")})})
+  }
+
+  var country = req.params.id;
+  fetch(`https://disease.sh/v2/countries/${country}`)
+    .catch(err => console.log(err))
+    .then(res => res.json())
+    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "false", data.country, country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
   //  .then(json =>  getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
   //     console.log(err)
   //  })))
-  
+
 })
 
 app.listen(port)
@@ -64,15 +64,15 @@ async function getIt(data, live, country, filename) {
        <style>
          body {
            margin: 0;
-           height: 350px;
-           width: 600px;
+           height: 700px;
+           width: 1200px;
            background: white;
            color: #323232;
            font-family: roboto, sans-serif;
          }
          .outer {
-           height: 335px;
-           width: 600px;
+           height: 700px;
+           width: 1200px;
            display: flex;
            flex-direction: column;
            align-items: center;
@@ -106,19 +106,19 @@ async function getIt(data, live, country, filename) {
        </style>
        <div class="outer">
          <div class="head">
-           <h1>${country ===""?"": `${country}'s `}Covid-19 Stats</h1>
+           <h1>${country === "" ? "" : `${country}'s `}Covid-19 Stats</h1>
          </div>
          <div class="inner">
            <div class="total-cases">
-             <h3>${live === "true"? "Today":"Total"} Cases</h3>
+             <h3>${live === "true" ? "Today" : "Total"} Cases</h3>
              <h1>${numberWithCommas(data.cases)}</h1>
            </div>
            <div class="total-deaths">
-             <h3>${live === "true"? "Today":"Total"} Deaths</h3>
+             <h3>${live === "true" ? "Today" : "Total"} Deaths</h3>
              <h1>${numberWithCommas(data.deaths)}</h1>
            </div>
            <div class="total-recovered">
-             <h3>${live === "true"? "Today":"Total"} Recovered</h3>
+             <h3>${live === "true" ? "Today" : "Total"} Recovered</h3>
              <h1>${numberWithCommas(data.recovered)}</h1>
            </div>
          </div>
@@ -129,8 +129,8 @@ async function getIt(data, live, country, filename) {
      </body>
    </html>
    `;
-   
-   console.log("Getting")
+
+    console.log("Getting")
     const browser = await puppeteer.launch({
       args: [
         '--no-sandbox',
@@ -139,17 +139,17 @@ async function getIt(data, live, country, filename) {
     })
     const page = await browser.newPage()
     await page.setViewport({
-        width: 600,
-        height: 350
+      width: 1200,
+      height: 700
     });
     await page.setContent(worldTemplate)
-    var _page = await page.screenshot({type: "png"})
+    var _page = await page.screenshot({ type: "png" })
     await browser.close()
     return _page
-    
+
   } catch (error) {
     console.log(error);
     return "{Error on our side}"
   }
-   
+
 }
