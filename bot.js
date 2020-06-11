@@ -11,50 +11,54 @@ function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+app.use(express.static("public"))
 
 app.get("/", (req, res) => {
-  const options = {
-    root: __dirname,
-    headers: {
-      'x-timestamp': Date.now(),
-      'x-sent': true
-    }
-  }
-
   fetch('https://disease.sh/v2/all')
     .then(res => res.json())
     .catch(err => console.log(err))
-    .then(json => { res.setHeader("Content-Type", "image/png"); getIt(json, "false", "", "image.png").catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
+    .then(json => { res.setHeader("Content-Type", "image/png"); getIt(json, "false", "").catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
   //   .then(json => getIt(json, "false", "", "image.png").then(res.sendFile('image.png', options, (err)=>{
   //     console.log(err)
   //  })));
 })
 
 app.get("/country/:id", (req, res) => {
-  const options = {
-    root: __dirname,
-    headers: {
-      'x-timestamp': Date.now(),
-      'x-sent': true
-    }
-  }
-
   var country = req.params.id;
   fetch(`https://disease.sh/v2/countries/${country}`)
     .catch(err => console.log(err))
     .then(res => res.json())
-    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "false", data.country, country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
+    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "false", data.country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
   //  .then(json =>  getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
   //     console.log(err)
   //  })))
 
 })
 
+app.get("/latest/:id", (req, res) => {
+  var country = req.params.id;
+  fetch(`https://disease.sh/v2/countries/${country}`)
+    .catch(err => console.log(err))
+    .then(res => res.json())
+    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", data.country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
+  //  .then(json =>  getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
+  //     console.log(err)
+  //  })))
+
+})
+
+app.get("/latest", (req, res) => {
+  fetch('https://disease.sh/v2/all')
+    .catch(err => console.log(err))
+    .then(res => res.json())
+    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", "",).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
+})
+
 app.listen(port)
 
 
 
-async function getIt(data, live, country, filename) {
+async function getIt(data, live, country) {
 
   try {
 
@@ -119,15 +123,15 @@ async function getIt(data, live, country, filename) {
           <div class="inner">
             <div class="total-cases">
               <h3>${live === "true" ? "Today" : "Total"} Cases</h3>
-              <h1>${numberWithCommas(data.cases)}</h1>
+              <h1>${live === "true" ? numberWithCommas(data.todayCases) : numberWithCommas(data.cases)}</h1>
             </div>
             <div class="total-deaths">
               <h3>${live === "true" ? "Today" : "Total"} Deaths</h3>
-              <h1>${numberWithCommas(data.deaths)}</h1>
+              <h1>${live === "true" ? numberWithCommas(data.todayDeaths) : numberWithCommas(data.deaths)}</h1>
             </div>
             <div class="total-recovered">
               <h3>${live === "true" ? "Today" : "Total"} Recovered</h3>
-              <h1>${numberWithCommas(data.recovered)}</h1>
+              <h1>${live === "true" ? numberWithCommas(data.todayRecovered) : numberWithCommas(data.recovered)}</h1>
             </div>
           </div>
           <div class="footer">
