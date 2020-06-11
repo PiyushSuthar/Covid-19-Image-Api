@@ -23,7 +23,8 @@ app.get("/", (req,res)=>{
    
    fetch('https://disease.sh/v2/all')
     .then(res => res.json())
-    .then(json => res.setHeader("Content-Type", "image/png"),res.end(getIt(json, "false", "", "image.png").catch(err=> console.log(err)).then(data => console.log("Done"+data))))
+    .catch(err => console.log(err) )
+    .then(json => {res.setHeader("Content-Type", "image/png"),res.end(getIt(json, "false", "", "image.png").catch(err=> console.log(err)).then(data => console.log("Done"+data)))})
   //   .then(json => getIt(json, "false", "", "image.png").then(res.sendFile('image.png', options, (err)=>{
   //     console.log(err)
   //  })));
@@ -40,6 +41,7 @@ app.get("/country/:id", (req,res)=>{
   
    var country = req.params.id;
    fetch(`https://disease.sh/v2/countries/${country}`)
+   .catch(err => console.log(err))
    .then(res => res.json())
    .then(data => {res.setHeader("Content-Type", "image/png");res.end(getIt(data, "false", json.country, country).catch(err => console.log(err)).then(console.log("Done")))})
   //  .then(json =>  getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
@@ -53,7 +55,10 @@ app.listen(port)
 
 
 async function getIt(data, live, country, filename) {
-   const worldTemplate = `<!DOCTYPE html>
+
+  try {
+
+    const worldTemplate = `<!DOCTYPE html>
    <html lang="en">
      <body>
        <style>
@@ -141,4 +146,10 @@ async function getIt(data, live, country, filename) {
     var _page = await page.screenshot({type: "png"})
     await browser.close()
     return _page
+    
+  } catch (error) {
+    console.log(error);
+    return "{Error on our side}"
+  }
+   
 }
