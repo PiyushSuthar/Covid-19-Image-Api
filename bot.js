@@ -23,7 +23,7 @@ app.get("/", (req,res)=>{
    
    fetch('https://disease.sh/v2/all')
     .then(res => res.json())
-    .then(json => res.setHeader("Content-Type", "image/png"),res.end(getIt(json, "false", "", "image.png")))
+    .then(json => res.setHeader("Content-Type", "image/png"),res.end(getIt(json, "false", "", "image.png").catch(err=> console.log(err)).then(data => console.log("Done"+data))))
   //   .then(json => getIt(json, "false", "", "image.png").then(res.sendFile('image.png', options, (err)=>{
   //     console.log(err)
   //  })));
@@ -41,7 +41,7 @@ app.get("/country/:id", (req,res)=>{
    var country = req.params.id;
    fetch(`https://disease.sh/v2/countries/${country}`)
    .then(res => res.json())
-   .then(json => res.setHeader("Content-Type", "image/png"),res.end(getIt(json, "false", json.country, country)))
+   .then(json => res.setHeader("Content-Type", "image/png"),res.end(getIt(json, "false", json.country, country).catch(err => console.log(err)).then(console.log("Done"))))
   //  .then(json =>  getIt(json, "false", json.country, country).then(res.sendFile(`${country}.png`, options, (err)=>{
   //     console.log(err)
   //  })))
