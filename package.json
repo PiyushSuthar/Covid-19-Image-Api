@@ -1,14 +1,14 @@
 {
-  "name": "twitter-thank-you-bot",
+  "name": "covid-case-image-api",
   "version": "1.0.0",
-  "description": "A bot that thanks everyone who follows.",
+  "description": "An Api that provides covid-19 stats in a beautiful image format.",
   "main": "bot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node bot.js"
   },
   "author": "Piyush Suthar",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "puppeteer": "^3.1.0",
     "node-fetch": "^2.6.0",
