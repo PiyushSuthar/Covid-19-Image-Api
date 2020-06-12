@@ -5,6 +5,8 @@
 
 > An Api that provides covid-19 stats in a beautiful image format.
 
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/PiyushSuthar/Covid-19-Image-Api)
+
 ### 🏠 [Homepage](https://covid-img.herokuapp.com)
 
 ### ✨ [Demo](https://covid-img.herokuapp.com)
