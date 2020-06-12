@@ -1,57 +1,132 @@
+//Requiring Modules
 const puppeteer = require('puppeteer')
 var fs = require('fs')
 const fetch = require('node-fetch')
 const express = require('express')
-const { json } = require('express')
+const { response } = require('express')
 const app = express()
+
+//Port
 const port = process.env.PORT || 8000;
 
-// Function for capitalizing the first word of the string
+// A Small utility func() to format numbers
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-
+//Getting Complete Data WorldWide
 app.get("/", (req, res) => {
+  //Fetch Api
   fetch('https://disease.sh/v2/all')
     .then(res => res.json())
     .catch(err => console.log(err))
-    .then(json => { res.setHeader("Content-Type", "image/png"); getIt(json, "false", "").catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
+    .then(json => {
+      res.setHeader("Content-Type", "image/png");
+      getIt(json, "false", "")
+        .catch(err => {
+          res.sendStatus(404);
+          res.send(err);
+          console.log(err)
+        })
+        .then(data => {
+          res.send(data);
+          console.log("Done")
+        }) 
+    })
 })
 
+//Getting Latest Data Worldwide
+app.get("/latest", (req, res) => {
+  fetch('https://disease.sh/v2/all')
+    .catch(err =>{
+      res.send("Error Occured")
+      console.log(err)
+    })
+    .then(response =>{
+      if (response.ok) {
+        return response.json()
+      } else {
+        return res.json("error: Something is wrong.")
+      }
+    })
+    .then(data => {
+      res.setHeader("Content-Type", "image/png");
+      getIt(data, "true", "")
+        .catch(err =>{
+          res.sendStatus(404);
+          res.send(err);
+          console.log(err)
+        })
+        .then(data => {
+          res.send(data);
+          console.log("Done")
+        }) 
+    })
+})
+
+//Getting complete data for a specific country
 app.get("/country/:id", (req, res) => {
   var country = req.params.id;
   fetch(`https://disease.sh/v2/countries/${country}`)
-    .catch(err => console.log(err))
+    .catch(err => {
+      res.send("Error Occured")
+      console.log(err)
+    })
     .then(res => res.json())
-    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "false", data.country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") })})
+    .then(data => {
+      res.setHeader("Content-Type", "image/png");
+      getIt(data, "false", data.country)
+        .catch(err => {
+          res.sendStatus(404);
+          res.send(err);
+          console.log(err)
+        })
+        .then(data => {
+          res.send(data); 
+          console.log("Done")
+        })
+    })
 })
 
+//Getting Latest Stats for a specific country
 app.get("/country/:id/latest",(req,res)=> getCountryLatest(req,res))
+//Specified 2 routes for my personal use :)
 app.get("/latest/:id", (req,res)=> getCountryLatest(req,res))
 
+//Function for above routes
 var getCountryLatest = (req, res) => {
   var country = req.params.id;
   fetch(`https://disease.sh/v2/countries/${country}`)
-    .catch(err => console.log(err))
+    .catch(err => {
+      res.send("Error Occured")
+      console.log(err)
+    })
     .then(res => res.json())
-    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", data.country).catch(err => console.log(err)).then(data => { res.send(data), console.log("Done") }) })
+    .then(data => {
+      res.setHeader("Content-Type", "image/png");
+      getIt(data, "true", data.country)
+        .catch(err => {
+          res.sendStatus(404);
+          res.send(err);
+          console.log(err)
+        })
+        .then(data => {
+          res.send(data);
+          console.log("Done")
+        }) 
+    })
 }
 
-app.get("/latest", (req, res) => {
-  fetch('https://disease.sh/v2/all')
-    .catch(err => console.log(err))
-    .then(res => res.json())
-    .then(data => { res.setHeader("Content-Type", "image/png"); getIt(data, "true", "").catch(err =>{res.sendStatus(404),console.log(err)}).then(data => { res.send(data), console.log("Done") }) })
-})
-
+//Listening for request...;)
 app.listen(port)
 
 
+//Main Function to get the image...
 async function getIt(data, live, country) {
 
   try {
 
+    //Main Template (HTML/CSS/JAVACSRIPT)
     const worldTemplate = `<!DOCTYPE html>
     <html lang="en">
       <body>
@@ -145,7 +220,7 @@ async function getIt(data, live, country) {
       width: 1200,
       height: 700
     });
-    await page.setContent(worldTemplate)
+    await page.setContent(worldTemplate)//Template Name
     var _page = await page.screenshot({ type: "png" })
     await browser.close()
     return _page
