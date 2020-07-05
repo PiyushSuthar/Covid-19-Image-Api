@@ -306,8 +306,8 @@ async function getIt(data, live, country) {
     })
     const page = await browser.newPage()
     await page.setViewport({
-      width: 1200,
-      height: 700
+      width: 1080,
+      height: 566
     });
     await page.setContent(worldTemplate)//Template Name
     var _page = await page.screenshot({ type: "png" })
