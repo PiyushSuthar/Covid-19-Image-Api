@@ -199,7 +199,7 @@ function numberWithCommas(x) {
     .outer {
       height: 1080px;
       width: 1080px;
-      background-image: url("./2-COVID-19.png");
+      background-image: url("https://cdn.statically.io/gh/PiyushSuthar/Covid-19-Image-Api/36950d90/public/2-COVID-19.png");
       background-repeat: no-repeat;
       background-size: cover;
       display: flex;
