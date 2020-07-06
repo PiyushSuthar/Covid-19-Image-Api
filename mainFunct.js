@@ -5,7 +5,7 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  module.exports = async function getIt(data, live, country, template) {
+  module.exports = async function (data, live, country, template) {
 
     try {
   

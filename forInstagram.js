@@ -61,3 +61,4 @@ router.get('/latest', (req,res)=>{
         }) 
     })
 })
+module.exports = router
