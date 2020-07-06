@@ -290,8 +290,8 @@ function numberWithCommas(x) {
       })
       const page = await browser.newPage()
       await page.setViewport({
-        width: template? 1080 : 1200,
-        height: template? 1080 : 700
+        width: template? 800 : 1200,
+        height: template? 800 : 700
       });
       await page.setContent(template? igTemplate :worldTemplate)//Template Name
       var _page = await page.screenshot({ type: "png" })
