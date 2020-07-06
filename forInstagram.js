@@ -1,6 +1,7 @@
 var express = require('express')
 var router = express.Router()
 const getIt = require("./mainFunct")
+const fetch = require('node-fetch')
 
 router.get("/", (req,res)=>{
     fetch('https://disease.sh/v2/all')
