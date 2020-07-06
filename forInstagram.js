@@ -19,7 +19,7 @@ router.get("/", (req,res)=>{
       }
     })
     .then(data => {
-      res.setHeader("Content-Type", "image/jpg");
+      res.setHeader("Content-Type", "image/jpeg");
       getIt(data, "false", "","ig")
         .catch(err =>{
           res.sendStatus(404);
@@ -49,7 +49,7 @@ router.get('/latest', (req,res)=>{
       }
     })
     .then(data => {
-      res.setHeader("Content-Type", "image/jpg");
+      res.setHeader("Content-Type", "image/jpeg");
       getIt(data, "true", "","ig")
         .catch(err =>{
           res.sendStatus(404);
