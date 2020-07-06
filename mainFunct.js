@@ -187,71 +187,71 @@ function numberWithCommas(x) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Static Template</title>
     <style>
-      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        background-color: black;
-      }
-      .outer {
-        height: 1080px;
-        width: 1080px;
-        background-image: url("https://cdn.statically.io/gh/PiyushSuthar/Covid-19-Image-Api/36950d90/public/2-COVID-19.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        font-family: "Poppins", sans-serif;
-      }
-      .inner {
-        margin-top: 120px;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-      }
-      .totalCases {
-        max-width: 45%;
-        width: 40%;
-        margin: 40px;
-      }
-      .totalCases h1 {
-        font-size: 65px;
-        margin-top: 2px;
-        font-weight: 500;
-      }
-      .totalCases h2 {
-        font-size: 35px;
-        margin-bottom: 2px;
-        font-weight: 400;
-      }
-      .cases {
-        background-color: rgb(252, 252, 224);
-      }
-      .active {
-        background-color: rgb(236, 241, 255);
-      }
-      .deaths {
-        background-color: rgb(255, 236, 236);
-      }
-      .recovered {
-        background-color: rgb(215, 252, 208);
-      }
-      .cases,
-      .active,
-      .recovered,
-      .deaths {
-        border-radius: 15px;
-        padding: 20px;
-      }
-    </style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background-color: black;
+    }
+    .outer {
+      height: 800px;
+      width: 800px;
+      background-image: url("https://cdn.statically.io/gh/PiyushSuthar/Covid-19-Image-Api/36950d90/public/2-COVID-19.png");
+      background-repeat: no-repeat;
+      background-size: cover;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: "Poppins", sans-serif;
+    }
+    .inner {
+      margin-top: 120px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+    .totalCases {
+      max-width: 45%;
+      width: 40%;
+      margin: 40px;
+    }
+    .totalCases h1 {
+      font-size: 50px;
+      margin-top: 2px;
+      font-weight: 500;
+    }
+    .totalCases h2 {
+      font-size: 25px;
+      margin-bottom: 2px;
+      font-weight: 400;
+    }
+    .cases {
+      background-color: rgb(252, 252, 224);
+    }
+    .active {
+      background-color: rgb(236, 241, 255);
+    }
+    .deaths {
+      background-color: rgb(255, 236, 236);
+    }
+    .recovered {
+      background-color: rgb(215, 252, 208);
+    }
+    .cases,
+    .active,
+    .recovered,
+    .deaths {
+      border-radius: 15px;
+      padding: 20px;
+    }
+  </style>
   </head>
   <body>
     <div class="outer">
