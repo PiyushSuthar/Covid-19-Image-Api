@@ -294,7 +294,7 @@ function numberWithCommas(x) {
         height: template? 800 : 700
       });
       await page.setContent(template? igTemplate :worldTemplate)//Template Name
-      var _page = await page.screenshot({ type: "png" })
+      var _page = await page.screenshot({ type: template?"jpg":"png" })
       await browser.close()
       return _page
   
