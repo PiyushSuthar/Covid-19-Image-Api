@@ -197,9 +197,9 @@ function numberWithCommas(x) {
       background-color: black;
     }
     .outer {
-      height: 800px;
-      width: 800px;
-      background-image: url("https://cdn.statically.io/gh/PiyushSuthar/Covid-19-Image-Api/36950d90/public/2-COVID-19.png");
+      height: 1080px;
+      width: 1080px;
+      background-image: url("./2-COVID-19.png");
       background-repeat: no-repeat;
       background-size: cover;
       display: flex;
@@ -223,12 +223,12 @@ function numberWithCommas(x) {
       margin: 40px;
     }
     .totalCases h1 {
-      font-size: 50px;
+      font-size: 65px;
       margin-top: 2px;
       font-weight: 500;
     }
     .totalCases h2 {
-      font-size: 25px;
+      font-size: 35px;
       margin-bottom: 2px;
       font-weight: 400;
     }
@@ -290,11 +290,11 @@ function numberWithCommas(x) {
       })
       const page = await browser.newPage()
       await page.setViewport({
-        width: template? 800 : 1200,
-        height: template? 800 : 700
+        width: template? 1080 : 1200,
+        height: template? 1080 : 700
       });
       await page.setContent(template? igTemplate :worldTemplate)//Template Name
-      var _page = await page.screenshot({ type: template?"jpg":"png" })
+      var _page = await page.screenshot({ type: template?"jpeg":"png" })
       await browser.close()
       return _page
   
@@ -306,3 +306,5 @@ function numberWithCommas(x) {
   }
   
   //That's it ;)
+
+  
