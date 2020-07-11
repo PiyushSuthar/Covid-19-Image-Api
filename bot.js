@@ -9,6 +9,11 @@ const ForinstaGram = require("./forInstagram")
 //Port
 const port = process.env.PORT || 8000;
 
+app.use(function(req,res,next) {
+  res.set('Cache-control', `no-store, no-cache, max-age=0`)
+  next()
+})
+
 app.use("/ig",ForinstaGram)
 
 
