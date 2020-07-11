@@ -2,6 +2,8 @@
 ![Version](https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](#)
 [![Twitter: piyushsthr](https://img.shields.io/twitter/follow/piyushsthr.svg?style=social)](https://twitter.com/piyushsthr)
+[![HitCount](http://hits.dwyl.com/piyushsuthar/Covid-19-Image-Api.svg)](http://hits.dwyl.com/piyushsuthar/Covid-19-Image-Api)
+
 
 > An Api that provides covid-19 stats in a beautiful image format.
 
